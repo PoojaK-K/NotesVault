@@ -1,4 +1,4 @@
-# 📝 NotesVaultknjgui
+# 📝 NotesVault
 
 A secure and modern full-stack Notes Management application built with **React**, **FastAPI**, and **PostgreSQL**. NotesVault enables users to create, organize, search, edit, and delete personal notes through a clean and responsive interface while ensuring data privacy with JWT-based authentication.
 
