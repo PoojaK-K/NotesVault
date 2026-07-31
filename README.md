@@ -224,16 +224,6 @@ npm run dev
 
 B.E. Computer Science and Engineering
 
-GitHub: https://github.com/PoojaK-K
-
 LinkedIn: https://www.linkedin.com/in/poojak-k/
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-⭐ If you found this project useful, consider giving it a star!
