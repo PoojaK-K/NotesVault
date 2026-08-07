@@ -29,28 +29,35 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+    <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center items-center px-4 overflow-hidden bg-white dark:bg-gray-950">
       
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-100/50 via-purple-100/50 to-pink-100/50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20 animate-gradient"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-300/40 dark:bg-purple-800/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-40 -left-40 w-80 h-80 bg-blue-300/40 dark:bg-blue-800/30 rounded-full blur-3xl animate-float-delayed"></div>
+      </div>
+
       <div className="text-center max-w-4xl mx-auto z-10 pt-20 pb-16">
-        <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full mb-8 font-medium text-sm animate-fade-in-up">
-          <Sparkles className="w-4 h-4" />
+        <div className="inline-flex items-center space-x-2 glass text-blue-700 dark:text-blue-300 px-5 py-2 rounded-full mb-8 font-medium text-sm animate-fade-in-up">
+          <Sparkles className="w-4 h-4 text-yellow-500" />
           <span>The next generation note-taking app</span>
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
           Your thoughts, <br className="hidden md:block"/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">securely vaulted.</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">securely vaulted.</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto animate-fade-in-up" style={{animationDelay: '0.2s'}}>
           Capture ideas, organize your life, and boost your productivity with NotesVault. Beautifully designed for clarity.
         </p>
         
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-          <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
+          <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full font-bold text-lg shadow-lg shadow-blue-500/30 hover:shadow-purple-500/40 transition-all hover:-translate-y-1">
             Get Started for Free
           </Link>
-          <Link to="/login" className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-full font-bold text-lg shadow border border-gray-200 dark:border-gray-700 transition-all">
+          <Link to="/login" className="w-full sm:w-auto px-8 py-4 glass hover:bg-white/80 dark:hover:bg-gray-800/80 text-gray-900 dark:text-white rounded-full font-bold text-lg transition-all hover:-translate-y-1">
             Login to your vault
           </Link>
         </div>
@@ -58,19 +65,14 @@ const Landing = () => {
 
       <div className="w-full max-w-6xl mx-auto py-16 grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
         {features.map((feature, idx) => (
-          <div key={idx} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-            <div className="bg-gray-50 dark:bg-gray-700/50 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+          <div key={idx} className="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300 group">
+            <div className="bg-white/50 dark:bg-gray-800/50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
               {feature.icon}
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.description}</p>
           </div>
         ))}
-      </div>
-      
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] bg-purple-200/40 dark:bg-purple-900/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-[40%] -left-[10%] w-[40%] h-[40%] bg-blue-200/40 dark:bg-blue-900/20 rounded-full blur-3xl"></div>
       </div>
 
     </div>

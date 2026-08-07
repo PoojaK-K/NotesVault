@@ -42,7 +42,7 @@ export const authAPI = {
 };
 
 export const notesAPI = {
-  getAll: () => api.get('/notes/'),
+  getAll: (filter) => api.get(`/notes${filter ? `?filter=${filter}` : ''}`),
   getById: (id) => api.get(`/notes/${id}`),
   create: (note) => api.post('/notes/', note),
   update: (id, note) => api.put(`/notes/${id}`, note),

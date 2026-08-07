@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\pooja\.gemini\antigravity\scratch\notesvault\backend\venv"
+VIRTUAL_ENV="C:\Users\pooja\OneDrive\Desktop\notesvault\backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

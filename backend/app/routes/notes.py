@@ -24,8 +24,19 @@ def search_notes(
     return notes
 
 @router.get("/", response_model=List[NoteOut])
-def get_notes(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    notes = db.query(Note).filter(Note.user_id == current_user.id).order_by(Note.created_at.desc()).all()
+def get_notes(
+    filter: Optional[str] = None,
+    db: Session = Depends(get_db), 
+    current_user: User = Depends(get_current_user)
+):
+    query = db.query(Note).filter(Note.user_id == current_user.id)
+    
+    if filter == "pinned":
+        query = query.filter(Note.is_pinned == True)
+    elif filter == "favorites":
+        query = query.filter(Note.is_favorite == True)
+        
+    notes = query.order_by(Note.is_pinned.desc(), Note.created_at.desc()).all()
     return notes
 
 @router.get("/{id}", response_model=NoteOut)

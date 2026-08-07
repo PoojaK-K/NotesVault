@@ -24,24 +24,33 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-950 overflow-hidden">
+      
+      {/* Animated Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[20%] left-[20%] w-72 h-72 bg-blue-400/20 rounded-full blur-[80px] animate-float"></div>
+        <div className="absolute bottom-[20%] right-[20%] w-80 h-80 bg-purple-400/20 rounded-full blur-[80px] animate-float-delayed"></div>
+      </div>
+
+      <div className="sm:mx-auto sm:w-full sm:max-w-md z-10 animate-fade-in-up">
         <div className="flex justify-center">
-          <Notebook className="h-12 w-12 text-blue-600" />
+          <div className="p-3 glass rounded-2xl">
+            <Notebook className="h-10 w-10 text-blue-600 dark:text-blue-400" />
+          </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-          Sign in to your account
+        <h2 className="mt-6 text-center text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          Welcome back
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-          Or{' '}
-          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
-            start your 14-day free trial
+          Don't have an account?{' '}
+          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors">
+            Sign up for free
           </Link>
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md z-10 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+        <div className="glass py-8 px-4 shadow-xl shadow-blue-900/5 sm:rounded-2xl sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <Input 
               label="Username" 
@@ -74,7 +83,7 @@ const Login = () => {
 
               <div className="text-sm">
                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
-                  Forgot your password?
+                  Forgot password?
                 </a>
               </div>
             </div>

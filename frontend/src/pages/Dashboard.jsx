@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Plus } from 'lucide-react';
 import { notesAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 import Sidebar from '../components/Sidebar';
 import SearchBar from '../components/SearchBar';
@@ -12,13 +13,22 @@ import Loader from '../components/Loader';
 import EmptyState from '../components/EmptyState';
 
 const Dashboard = () => {
+  const location = useLocation();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState('');
   
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingNote, setEditingNote] = useState(null);
+
+  // Parse filter from URL search params
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const f = params.get('filter') || '';
+    setFilter(f);
+  }, [location.search]);
 
   const fetchNotes = useCallback(async (query = '') => {
     try {
@@ -26,6 +36,8 @@ const Dashboard = () => {
       let response;
       if (query) {
         response = await notesAPI.search(query);
+      } else if (filter) {
+        response = await notesAPI.getAll(filter);
       } else {
         response = await notesAPI.getAll();
       }
@@ -35,7 +47,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     fetchNotes(searchQuery);
@@ -67,6 +79,28 @@ const Dashboard = () => {
     }
   };
 
+// Toggle pin status
+  const handleTogglePin = async (note) => {
+    try {
+      await notesAPI.update(note.id, { is_pinned: !note.is_pinned });
+      toast.success(note.is_pinned ? 'Unpinned' : 'Pinned');
+      fetchNotes(searchQuery);
+    } catch (error) {
+      toast.error('Failed to toggle pin');
+    }
+  };
+
+  // Toggle favorite status
+  const handleToggleFav = async (note) => {
+    try {
+      await notesAPI.update(note.id, { is_favorite: !note.is_favorite });
+      toast.success(note.is_favorite ? 'Removed from favorites' : 'Added to favorites');
+      fetchNotes(searchQuery);
+    } catch (error) {
+      toast.error('Failed to toggle favorite');
+    }
+  };
+
   const handleSaveNote = async (noteData) => {
     try {
       if (editingNote) {
@@ -84,11 +118,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-[calc(100vh-4rem)] overflow-hidden bg-gray-50/50 dark:bg-gray-950">
       <Sidebar />
       
-      <main className="flex-1 flex flex-col h-full overflow-hidden">
-        <div className="p-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 flex justify-between items-center z-10 shadow-sm">
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
+        {/* Animated Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[10%] left-[60%] w-96 h-96 bg-blue-300/10 rounded-full blur-[100px] animate-float"></div>
+        </div>
+
+        <div className="p-6 border-b border-gray-200/50 dark:border-gray-800/50 bg-white/50 dark:bg-gray-900/50 backdrop-blur-md flex justify-between items-center z-10 shadow-sm">
           <div className="flex-1 max-w-xl">
             <SearchBar onSearch={handleSearch} />
           </div>
@@ -100,7 +139,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-6 z-10 relative">
           {loading ? (
             <Loader />
           ) : notes.length === 0 ? (
@@ -124,6 +163,8 @@ const Dashboard = () => {
                   note={note} 
                   onEdit={handleEditNote} 
                   onDelete={handleDeleteNote} 
+                  onTogglePin={handleTogglePin} 
+                  onToggleFav={handleToggleFav} 
                 />
               ))}
             </div>

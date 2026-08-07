@@ -5,6 +5,8 @@ from typing import Optional
 class NoteBase(BaseModel):
     title: constr(min_length=1)
     content: constr(min_length=1)
+    is_pinned: Optional[bool] = False
+    is_favorite: Optional[bool] = False
 
 class NoteCreate(NoteBase):
     pass
@@ -12,6 +14,8 @@ class NoteCreate(NoteBase):
 class NoteUpdate(BaseModel):
     title: Optional[constr(min_length=1)] = None
     content: Optional[constr(min_length=1)] = None
+    is_pinned: Optional[bool] = None
+    is_favorite: Optional[bool] = None
 
 class NoteOut(NoteBase):
     id: int
